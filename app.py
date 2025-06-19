@@ -10,7 +10,7 @@ def search_artworks(query):
     )
     if response.status_code == 200:
         data = response.json()
-        return data.get("objectIDs", [])[:5]  # 최대 5개만 표시
+        return data.get("objectIDs", [])[:10]  # 최대 10개만 표시
     return []
 
 def get_artwork_details(object_id):
@@ -31,5 +31,8 @@ if query:
         st.subheader(data.get("title", "Untitled"))
         if data.get("primaryImageSmall"):
             st.image(data["primaryImageSmall"], width=300)
+        else:
+            st.markdown("*No photo available*")
+            
         st.write(f"Artist: {data.get('artistDisplayName', 'Unknown')}")
         st.write(f"Year: {data.get('objectDate', 'N/A')}")
